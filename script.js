@@ -90,3 +90,63 @@ function displayBoard() {
 }
 
 displayBoard();
+
+function flipCard(e) {
+	const cardId = e.target.getAttribute('data-id');
+	const imgElement = e.target;
+	imgElement.src = images[cardId].img;
+	cardsChosen.push({ ...images[cardId], id: cardId });
+	if (cardsChosen.length === 2) {
+		checkMatch();
+	}
+}
+
+function checkMatch() {
+	const cards = document.getElementsByClassName('img');
+	const [firstCard, secondCard] = cardsChosen;
+
+	if (firstCard.id === secondCard.id) {
+		setTimeout(() => {
+			cards[firstCard.id].src = DEFAULT_IMAGE;
+		}, 500);
+	} else if (firstCard.name === secondCard.name) {
+		setTimeout(() => {
+			cards[firstCard.id].src = WHITE_IMAGE;
+			cards[firstCard.id].classList.add('match');
+			cards[firstCard.id].removeEventListener('click', flipCard);
+
+			cards[secondCard.id].src = WHITE_IMAGE;
+			cards[secondCard.id].classList.add('match');
+			cards[secondCard.id].removeEventListener('click', flipCard);
+		}, 500);
+		cardsWon = [...cardsWon, firstCard];
+		score += 5;
+		updateScore();
+		console.log(cardsWon.length, parseInt(images.length / 2));
+		if (cardsWon.length === parseInt(images.length / 2)) {
+			stopGame();
+		}
+	} else {
+		setTimeout(() => {
+			cards[firstCard.id].src = DEFAULT_IMAGE;
+			cards[secondCard.id].src = DEFAULT_IMAGE;
+		}, 500);
+	}
+
+	cardsChosen = [];
+}
+
+function updateScore() {
+	scoreElement.innerText = `Your Score: ${score}`;
+}
+
+function stopGame() {
+	const button = document.createElement('button');
+	button.addEventListener('click', () => {
+		score = 0;
+		displayBoard();
+	});
+	button.innerText = 'Restart Game';
+	gameBoard.innerHTML = '';
+	gameBoard.appendChild(button);
+}
