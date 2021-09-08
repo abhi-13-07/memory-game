@@ -38,3 +38,23 @@ body {
 .match {
 	cursor: not-allowed;
 }
+
+@media (max-width: 500px) {
+	:root {
+		--image-height: 70px;
+		--image-width: 70px;
+	}
+
+	.img {
+		height: var(--image-height);
+		width: var(--image-width);
+		cursor: pointer;
+	}
+
+	#game-board {
+		display: grid;
+		align-items: center;
+		grid-template-columns: repeat(4, var(--image-width));
+		gap: 10px;
+	}
+}
