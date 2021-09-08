@@ -1,0 +1,40 @@
+:root {
+	--image-height: 120px;
+	--image-width: 120px;
+}
+
+* {
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+#game-board {
+	display: grid;
+	align-items: center;
+	grid-template-columns: repeat(4, var(--image-width));
+	gap: 20px;
+}
+
+.img {
+	height: var(--image-height);
+	width: var(--image-width);
+	cursor: pointer;
+}
+
+.match {
+	cursor: not-allowed;
+}
