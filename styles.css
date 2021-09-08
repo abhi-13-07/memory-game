@@ -22,6 +22,14 @@ body {
 	flex-direction: column;
 }
 
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	width: 540px;
+}
+
 #game-board {
 	display: grid;
 	align-items: center;
@@ -49,6 +57,14 @@ body {
 		height: var(--image-height);
 		width: var(--image-width);
 		cursor: pointer;
+	}
+
+	.header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+		width: 310px;
 	}
 
 	#game-board {

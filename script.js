@@ -67,15 +67,23 @@ const images = [
 
 const gameBoard = document.getElementById('game-board');
 const scoreElement = document.getElementById('score');
+const startButton = document.getElementById('start-btn');
+const timerElement = document.getElementById('timer');
 
 let score = 0;
 let cardsChosen = [];
 let cardsWon = [];
+let seconds = 0;
+let minutes = 0;
+
+let timerInterval;
+
 const DEFAULT_IMAGE = './images/questionmark.png';
 const WHITE_IMAGE = './images/white.png';
 
 function displayBoard() {
 	images.sort(() => Math.random() - 0.5);
+	startButton.remove();
 	scoreElement.innerHTML = `Your Score: ${score}`;
 	gameBoard.innerHTML = '';
 	images.forEach((image, index) => {
@@ -89,7 +97,10 @@ function displayBoard() {
 	});
 }
 
-displayBoard();
+startButton.addEventListener('click', () => {
+	displayBoard();
+	startTimer();
+});
 
 function flipCard(e) {
 	const cardId = e.target.getAttribute('data-id');
@@ -141,12 +152,32 @@ function updateScore() {
 }
 
 function stopGame() {
+	stopTimer();
 	const button = document.createElement('button');
 	button.addEventListener('click', () => {
 		score = 0;
 		displayBoard();
+		startTimer();
 	});
 	button.innerText = 'Restart Game';
 	gameBoard.innerHTML = '';
 	gameBoard.appendChild(button);
+}
+
+function startTimer() {
+	timerInterval = setInterval(() => {
+		seconds += 1;
+		if (seconds === 59) {
+			minutes += 1;
+		}
+		timerElement.innerText = `Time: ${
+			minutes < 10 ? `0${minutes}` : minutes
+		} : ${seconds < 10 ? `0${seconds}` : seconds}`;
+	}, 1000);
+}
+
+function stopTimer() {
+	clearInterval(timerInterval);
+	seconds = 0;
+	minutes = 0;
 }
