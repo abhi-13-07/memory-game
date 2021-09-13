@@ -156,6 +156,7 @@ function stopGame() {
 	const button = document.createElement('button');
 	button.addEventListener('click', () => {
 		score = 0;
+		cardsWon = [];
 		displayBoard();
 		startTimer();
 	});
@@ -168,6 +169,7 @@ function startTimer() {
 	timerInterval = setInterval(() => {
 		seconds += 1;
 		if (seconds === 59) {
+			seconds = 0;
 			minutes += 1;
 		}
 		timerElement.innerText = `Time: ${
